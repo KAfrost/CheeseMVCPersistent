@@ -32,6 +32,7 @@ namespace CheeseMVC.Controllers
         {
             List<CheeseCategory> categories = context.Categories.ToList();
 
+<<<<<<< HEAD
             return View(categories);
         }
 
@@ -71,5 +72,46 @@ namespace CheeseMVC.Controllers
                     }
                     return NoContent();
                 } */
+=======
+            return View(categories); 
+        }
+
+
+      public IActionResult Add()
+         {
+             AddCategoryViewModel addCategoryViewModel = new AddCategoryViewModel();
+
+             return View(addCategoryViewModel);
+         }
+         [HttpPost]
+         public IActionResult Add(AddCategoryViewModel viewModel)
+         {
+             if (ModelState.IsValid)
+             {
+                 CheeseCategory newCategory = new CheeseCategory
+                 {
+                     Name = viewModel.Name
+                 };
+
+                 context.Categories.Add(newCategory);
+                 context.SaveChanges();
+
+                 return Redirect("/Category");
+             }
+             return View(viewModel);
+         }
+
+/*
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            if (context.Categories.Where(context => context.ID == id).Any())
+            {
+                CheeseCategory cat = context.Categories.Single(c => c.ID = id);
+                context.Categories.Remove(cat);
+            }
+            return NoContent();
+        } */
+>>>>>>> 4cc2b86d14f3582b54ec9081835a975de360afd4
     }
 }
