@@ -7,9 +7,19 @@ namespace CheeseMVC.Data
     {
         public DbSet<Cheese> Cheeses { get; set; }
 
-        public CheeseDbContext(DbContextOptions<CheeseDbContext> options) 
+        public DbSet<CheeseCategory> Categories { get; set; }
+
+        public DbSet<Menu> Menu { get; set; }
+        public DbSet<CheeseMenu> CheeseMenu { get; set; }
+        public object Menus { get; internal set; }
+        public object CheeseMenus { get; internal set; }
+        public CheeseDbContext(DbContextOptions<CheeseDbContext> options)
             : base(options)
         { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CheeseMenu>().HasKey(c => new { c.CheeseID, c.MenuID });
+        }
 
     }
 }
